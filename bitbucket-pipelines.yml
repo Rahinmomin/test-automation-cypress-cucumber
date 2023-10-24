@@ -1,0 +1,20 @@
+#  Template NodeJS build
+
+#  This template allows you to validate your NodeJS code.
+#  The workflow allows running tests and code linting on the default branch.
+
+image: cypress/browsers:node18.12.0-chrome106-ff106
+
+pipelines:
+  default:
+    - parallel:
+        - step:
+            name: Build and Test
+            caches:
+              - node
+            script:
+              - npm ci
+              - npx cypress run --spec cypress/Integration/examples/Test2.js --headless
+            artifacts:
+              - cypress/screenshots/**
+              - cypress/videos/**
